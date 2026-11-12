@@ -18,6 +18,8 @@
 
 [引擎接口](engine/engine.go) · [MySQL 实现](modules/db/mysql.go) · [SQL 执行与结果转换](modules/db/performer.go)
 
+`CommonQuery` 与 `CommonQueryWithTx` 共用结果行转换。每次查询读取列元数据后，每列只规范化一次数据库类型名称，再用于各行扫描和结果转换。
+
 ## 改动归属
 
 - 通用会话、权限、路由、组件或表单筛选行为在 GoAdmin fork 维护。若修改 `FilterOperatorLike`，对照 [operators.go](template/types/operators.go) 和 [operators_test.go](template/types/operators_test.go) 核对默认筛选控件。
