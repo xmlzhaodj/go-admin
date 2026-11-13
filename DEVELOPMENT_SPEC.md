@@ -11,6 +11,7 @@
 | 接入点 | 当前契约 |
 | --- | --- |
 | `Engine.AddConfigFromYAML`、`Use` | 初始化数据库和站点设置，注册管理插件及路由。宿主先导入对应适配器、驱动和主题 |
+| `Admin.SetSiteForm` | 宿主在 `Engine.Use` 前注册内置网站设置表单的扩展，沿用网站设置的启用条件、路由和权限 |
 | `Engine.HTML` | 宿主回调返回 `(types.Panel, error)`，由主题渲染。回调错误走警告面板 |
 | `Engine.Data` | 宿主回调写入响应。导出应核对最终 Content-Type、下载响应头和 XLSX 内容 |
 | `ResolveMysqlConnection` | 将 `db.Connection` 交给宿主。`Query(query, args...)` 和 `Exec(query, args...)` 已支持向底层传递参数 |

@@ -22,6 +22,13 @@ type Admin struct {
 	tableList table.GeneratorList
 	guardian  *guard.Guard
 	handler   *controller.Handler
+	siteForm  func(*types.FormPanel)
+}
+
+// SetSiteForm customizes the built-in site settings form when config modification is allowed.
+func (admin *Admin) SetSiteForm(customize func(*types.FormPanel)) *Admin {
+	admin.siteForm = customize
+	return admin
 }
 
 // InitPlugin implements Plugin.InitPlugin.
@@ -42,7 +49,13 @@ func (admin *Admin) InitPlugin(services service.List) {
 		"normal_manager": st.GetNormalManagerTable,
 	}
 	if c.IsAllowConfigModification() {
-		genList.Add("site", st.GetSiteTable)
+		genList.Add("site", func(ctx *context.Context) table.Table {
+			site := st.GetSiteTable(ctx)
+			if admin.siteForm != nil {
+				admin.siteForm(site.GetForm())
+			}
+			return site
+		})
 	}
 	if c.IsNotProductionEnvironment() {
 		genList.Add("generate", st.GetGenerateForm)

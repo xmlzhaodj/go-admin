@@ -1,5 +1,9 @@
 # GoAdmin fork 开发记录
 
+## 2026-11-13 网站设置表单扩展
+
+宿主可用 `Admin.SetSiteForm` 扩展内置网站设置。在 `small_admin` 的隔离 MySQL 环境验证下拉框渲染、保存、校验和重启恢复。通过 `go test ./plugins/admin ./plugins/admin/modules/table`。
+
 ## 2026-11-12 减少查询结果的重复类型解析
 
 - 在本机 MySQL 隔离库核对普通查询与事务查询的整数、定点数、文本和空值。用合成查询返回 8727 行、49 列，改动前后的结果摘要一致。五次运行的中位耗时由 80.983 毫秒降至 41.810 毫秒。通过 `go vet ./modules/db`，`small_admin` 工作区构建使用了本地 fork。
